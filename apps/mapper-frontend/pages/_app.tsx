@@ -6,7 +6,7 @@ function CustomApp({ Component, pageProps }: AppProps) {
   return (
     <>
       <Head>
-        <title>Welcome to mapper-frontend!</title>
+        <title>Mapper</title>
       </Head>
       <main className="app">
         <Component {...pageProps} />
