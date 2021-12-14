@@ -1,13 +1,22 @@
-import { Controller, Get } from '@nestjs/common';
-
+import { Body, Controller, Delete, Get, Post } from '@nestjs/common';
 import { AppService } from './app.service';
 
-@Controller()
+@Controller('markers')
 export class AppController {
   constructor(private readonly appService: AppService) {}
 
+  @Post()
+  create(@Body() { name }: { name: string }) {
+    return this.appService.create(name);
+  }
+
   @Get()
-  getData() {
-    return this.appService.getData();
+  read() {
+    return this.appService.getAll();
+  }
+
+  @Delete()
+  delete(@Body() { id }: { id: number }) {
+    return this.appService.delete(id);
   }
 }
