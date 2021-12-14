@@ -19,7 +19,8 @@
       "executor": "@nrwl/next:server",
       "options": {
         "buildTarget": "mapper-frontend:build",
-        "dev": true
+        "dev": true,
+        "proxyConfig": "apps/mapper-frontend/proxy.conf.json"
       },
       "configurations": {
         "production": {

@@ -1,6 +1,7 @@
 {
   "version": 2,
   "projects": {
+    "mapper-api": "apps/mapper-api",
     "mapper-frontend": "apps/mapper-frontend",
     "mapper-frontend-e2e": "apps/mapper-frontend-e2e"
   }
