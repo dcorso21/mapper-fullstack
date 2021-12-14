@@ -34,6 +34,8 @@ yarn-error.log
 testem.log
 /typings
 
+/apps/mapper-frontend/.env
+
 # System Files
 .DS_Store
 Thumbs.db
