@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import GoogleMapReact from 'google-map-react';
+import axios from "axios";
 
 interface MarkerType {
   lat: number;
@@ -19,16 +20,8 @@ export default function SimpleMap() {
   };
 
   useEffect(() => {
-    fetch(
-      `https://maps.googleapis.com/maps/api/place/findplacefromtext/json?input=Paris&inputtype=textquery&fields=formatted_address%2Cname%2Crating%2Copening_hours%2Cgeometry&key=${process.env.NEXT_PUBLIC_GOOGLE_MAP_KEY}`,
-      {
-        headers: {
-          'Access-Control-Allow-Origin': "*",
-        },
-      }
-    )
-      .then((res) => res.json())
-      .then(console.log);
+    axios.post("/api/places", {body: {searchTerm: "Paris"}})
+      .then(response => console.log(response.data));
   }, []);
 
   return (
