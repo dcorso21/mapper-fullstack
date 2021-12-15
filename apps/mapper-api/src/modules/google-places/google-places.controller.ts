@@ -12,6 +12,7 @@ export class PlacesController {
 
   @Post()
   create(@Body() payload: { searchTerm: string }) {
+    console.log(payload.searchTerm);
     return this.placesService.search(payload.searchTerm);
   }
 }
