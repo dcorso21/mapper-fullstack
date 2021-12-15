@@ -1,4 +1,5 @@
 import { ChangeEvent, useCallback, useState } from 'react';
+import SearchComponent from '../components/searchComponent/searchComponent';
 import useMarkers from '../hooks/useMarkers';
 
 export function Index() {
@@ -17,7 +18,7 @@ export function Index() {
 
   return (
     <>
-      <input type="text" value={newEventName} onChange={onSetNewEventName} />
+      {/* <input type="text" value={newEventName} onChange={onSetNewEventName} />
       <button onClick={handleCreateMarker}>Save</button>
       {markers.map((m) => (
         <div>
@@ -26,7 +27,9 @@ export function Index() {
             <button onClick={() => deleteMarker(m.id)}>delete</button>
           </span>
         </div>
-      ))}
+      ))} */}
+
+      <SearchComponent/>
     </>
   );
 }
