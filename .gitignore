@@ -35,6 +35,7 @@ testem.log
 /typings
 
 /apps/mapper-frontend/.env
+/apps/mapper-api/.env
 
 # System Files
 .DS_Store
