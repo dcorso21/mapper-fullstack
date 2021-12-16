@@ -9,5 +9,5 @@ Fullstack build testing out:
 - NX
 - NextJS
 - NestJS
-- TypeORM
-- MongoDB
+- Gooogle Places API
+- Google Maps JS API
