@@ -5,13 +5,8 @@ import { PlacesService } from './google-places.service';
 export class PlacesController {
   constructor(private readonly placesService: PlacesService) {}
 
-  @Get()
-  test() {
-    return { hello: 'world' };
-  }
-
   @Post()
-  create(@Body() payload: { searchTerm: string }) {
+  search(@Body() payload: { searchTerm: string }) {
     return this.placesService.search(payload.searchTerm);
   }
 }

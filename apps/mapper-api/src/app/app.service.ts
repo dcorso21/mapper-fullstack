@@ -10,13 +10,11 @@ export class AppService {
   }
 
   create(name: string): void {
-    Logger.log(`Creating: ${name}`)
     let newMarker = { name, id: this.mapMarkers.length + 1 };
     this.mapMarkers = [...this.mapMarkers, newMarker];
   }
 
   delete(idToDelete: number): void {
-    Logger.log(`Deleting: ${idToDelete}`)
     this.mapMarkers = this.mapMarkers.filter(({id}) => id !== idToDelete)
   }
 }
