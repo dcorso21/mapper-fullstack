@@ -11,15 +11,23 @@ export interface MapMarker {
 export interface SearchCandidate {
   formatted_address: string;
   geometry: Geometry;
+  icon: string;
+  icon_background_color: string;
+  icon_mask_base_uri: string;
   name: string;
+  place_id: string;
+  reference: string;
+  types: string[];
 }
 
 interface Geometry {
   location: Location;
-  viewport: {
-    northeast: Location;
-    southwest: Location;
-  };
+  viewport: Viewport;
+}
+
+interface Viewport {
+  northeast: Location;
+  southwest: Location;
 }
 
 interface Location {

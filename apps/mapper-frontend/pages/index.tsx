@@ -1,37 +1,77 @@
-import { ChangeEvent, useCallback, useState } from 'react';
+import { SearchCandidate } from '@mapper-fullstack/common';
+import { Button, Card } from '@mui/material';
+import { useState, useEffect } from 'react';
+import GoogleMapComponent from '../components/GoogleMapComponent/GoogleMapComponent';
 import SearchComponent from '../components/searchComponent/searchComponent';
-import useMarkers from '../hooks/useMarkers';
+import SimpleModalComponent from '../components/SimpleModalComponent';
+import styles from './index.module.scss';
 
 export function Index() {
-  const { markers, createMarker, deleteMarker } = useMarkers();
-  const [newEventName, setNewEventName] = useState('');
+  const [modalIsOpen, setModalIsOpen] = useState(false);
+  const [newLocation, setNewLocation] = useState<SearchCandidate>();
 
-  const onSetNewEventName = useCallback(
-    (evt: ChangeEvent<HTMLInputElement>) => setNewEventName(evt.target.value),
-    []
-  );
-
-  const handleCreateMarker = useCallback(() => {
-    let val = newEventName;
-    val && createMarker(val).then(() => setNewEventName(''));
-  }, [newEventName]);
+  function handleNewLocation(location) {
+    setNewLocation(location);
+    setModalIsOpen(false);
+  }
 
   return (
     <>
-      {/* <input type="text" value={newEventName} onChange={onSetNewEventName} />
-      <button onClick={handleCreateMarker}>Save</button>
-      {markers.map((m) => (
-        <div>
-          <span>{m.name}</span>
-          <span>
-            <button onClick={() => deleteMarker(m.id)}>delete</button>
-          </span>
-        </div>
-      ))} */}
-
-      <SearchComponent/>
+      <SelectionModal
+        open={modalIsOpen}
+        setOpen={setModalIsOpen}
+        onSelect={handleNewLocation}
+      />
+      <Button onClick={() => setModalIsOpen(true)}>Add New Location</Button>
+      <pre>{JSON.stringify(newLocation, null, 4)}</pre>
     </>
   );
 }
 
 export default Index;
+
+interface SelectionModalProps {
+  open: boolean;
+  setOpen: (open: boolean) => void;
+  onSelect: (candidate: SearchCandidate) => void;
+}
+
+function SelectionModal({ open, setOpen, onSelect }: SelectionModalProps) {
+  const [selectedPlace, setSelectedPlace] = useState<SearchCandidate>();
+
+  const [mapProps, setMapProps] = useState({
+    center: {
+      lat: 37.24823536219344,
+      lng: -78.1169912045482,
+    },
+    zoom: 5,
+  });
+
+  useEffect(() => {
+    if (selectedPlace) {
+      setMapProps({ ...mapProps, center: selectedPlace.geometry.location });
+    }
+  }, [selectedPlace]);
+
+  return (
+    <SimpleModalComponent open={open} setOpen={setOpen}>
+      <div className={styles.mainFrame}>
+        <div className={styles.leftPanel}>
+          <SearchComponent onSelectOption={setSelectedPlace} />
+          {!!selectedPlace && (
+            <Card>
+              <h2>{selectedPlace.formatted_address}</h2>
+              <pre>{JSON.stringify(selectedPlace.geometry.location)}</pre>
+            </Card>
+          )}
+          <Button onClick={() => onSelect(selectedPlace)}>
+            Choose Location
+          </Button>
+        </div>
+        <div className={styles.rightPanel}>
+          <GoogleMapComponent {...mapProps} />
+        </div>
+      </div>
+    </SimpleModalComponent>
+  );
+}
