@@ -8,10 +8,13 @@ import styles from './index.module.scss';
 
 export function Index() {
   const [modalIsOpen, setModalIsOpen] = useState(false);
-  const [newLocation, setNewLocation] = useState<SearchCandidate>();
+  const [savedLocations, setSavedLocations] = useState<SearchCandidate[]>([])
 
-  function handleNewLocation(location) {
-    setNewLocation(location);
+  function handleNewLocation(location: SearchCandidate) {
+    setSavedLocations((sl) => {
+      sl.push(location)
+      return sl;
+    })
     setModalIsOpen(false);
   }
 
@@ -23,7 +26,13 @@ export function Index() {
         onSelect={handleNewLocation}
       />
       <Button onClick={() => setModalIsOpen(true)}>Add New Location</Button>
-      <pre>{JSON.stringify(newLocation, null, 4)}</pre>
+      {savedLocations.map(sl => {
+        return (
+          <div className="location">
+            {sl.name}
+          </div>
+        )
+      })}
     </>
   );
 }
